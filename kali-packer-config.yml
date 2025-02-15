@@ -8,5 +8,40 @@
 - hosts: all
   gather_facts: yes
   become: yes
-  roles:
-    - { role: linux-base-config }
+  tasks:
+    - name: Create kali user
+      user:
+        name: kali
+        state: present
+        generate_ssh_key: no
+        home: /home/kali
+        create_home: true
+
+    - name: Create .ssh folder for kali account user
+      file:
+        path: /home/kali/.ssh/
+        state: directory
+        owner: kali
+        group: kali
+        mode: '0700'
+
+    - name: Deploy Public Key to authorized_keys File
+      copy:
+        content: '{{ build_key }}'
+        dest: /home/kali/.ssh/authorized_keys
+        owner: kali
+        group: kali
+        mode: '0600'
+
+    - name: Grant kali Sudo Permissions
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: 'kali ALL=(ALL) ALL'
+        validate: 'visudo -cf %s'
+
+    - name: Set kali user password - be sure to do this last!
+      user:
+        name: kali
+        state: present
+        password: "{{ 'newpassword' | password_hash('sha512') }}"

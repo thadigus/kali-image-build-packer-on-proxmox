@@ -130,8 +130,10 @@ build {
     provisioner "ansible" {
     user          = var.ssh_user
     playbook_file = "${path.cwd}/kali-packer-config.yml"
-    roles_path    = "${path.cwd}/roles"
-    extra_arguments = [ "--scp-extra-args", "'-O'" ] # Added to include work around https://github.com/hashicorp/packer/issues/11783#issuecomment-1137052770
+    extra_arguments = [
+      "--scp-extra-args", "'-O'", // Added to include work around https://github.com/hashicorp/packer/issues/11783#issuecomment-1137052770
+      "--extra-vars", "build_key='${var.build_key}'"
+    ]
     ansible_env_vars = [
       "ANSIBLE_CONFIG=${path.cwd}/ansible.cfg",
       "ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3",

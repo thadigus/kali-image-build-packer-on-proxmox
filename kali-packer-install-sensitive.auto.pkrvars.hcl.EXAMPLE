@@ -6,8 +6,7 @@
 */
 
 // Default Account Credentials
-ssh_user                 = "ANSIBLE_SERVICE_ACCOUNT_USER" //SSH Username for Preseed/Kickstart to configure so Ansible can get into provision afterwards
-ssh_private_key_file     = "~/ans_svc_id_rsa" // File path for the private key you'd like to use to provision the box
+ssh_user                 = "ACCOUNT_USER" //SSH Username for Preseed/Kickstart to configure so Ansible can get into provision afterwards
 build_key                = "ssh-rsa AAAAB3NzaC1yc....x/vq1OaLAz6pYk8=" // Actual public key you'd like installed for the Ansible user to be allowed in.
 
 /*
@@ -22,5 +21,5 @@ proxmox_node             = "PROXMOXNODE"
 proxmox_user             = "root@pam!APIKEY"
 proxmox_apikey           = "XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX"
 
-// VM Config
+// VM Config - if required, defaults to nothing
 vlan_tag                 = ""

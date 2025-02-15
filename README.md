@@ -4,6 +4,8 @@ This was my attempt at automating Kali builds in Proxmox with Hashicorp Packer. 
 
 Start out with installing Packer on your machine and editing the sensitive vars file. Make sure the version of Kali you'd like to use is installed at `local:iso/kali-linux-2024.4-installer-amd64.iso` on the Proxmox target since downloading the ISO each time is not super fun. This is mainly intended for a home lab environment so take everything with a grain of salt and feel free to tinker. If you have any issues please feel free to open one [at the issues tab](https://gitlab.com/thadigus/kali-image-build-packer-on-proxmox/-/issues)!
 
+It's important to know that Kali will not let you install without a password so my script will generate a random, very long, password for the user account and then the preseed file will use that password for the install. The password is then passed into Ansible. This means that you will likely want to change the password when you're done with Ansible so you can access the account. Be sure to set the password you'd like using the Ansible playbook, or you can install an SSH key. 
+
 ### Sample Preseed File
 
 This is the basic Preseed file if you just need a general reference for your own project. I found it somewhat hard to track this down and get it working so here's what worked for me. Be sure to note the Packer variables noted with `${variablename}` in the file. Those variables are filled by Packer at runtime as a part of the build process. This way it's fairly modular.
@@ -102,7 +104,6 @@ Ensure that your secure vars are configured with at least the following lines at
 
 // Default Account Credentials
 ssh_user                 = "ANSIBLE_SERVICE_ACCOUNT_USER" //SSH Username for Preseed/Kickstart to configure so Ansible can get into provision afterwards
-ssh_private_key_file     = "~/ans_svc_id_rsa" // File path for the private key you'd like to use to provision the box
 build_key                = "ssh-rsa AAAAB3NzaC1yc....x/vq1OaLAz6pYk8=" // Actual public key you'd like installed for the Ansible user to be allowed in.
 
 /*
