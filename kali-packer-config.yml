@@ -1,0 +1,12 @@
+####################################
+## /kali-packer-config-config.yml ##
+####################################
+#
+# Ansible playbook to be ran against hosts after Packer provisioning.
+
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: linux-base-config }

@@ -1,0 +1,26 @@
+/*
+    DESCRIPTION:
+    Build account variables used for all builds.
+    - Variables are passed to and used by guest operating system configuration files (e.g., ks.cfg, autounattend.xml).
+    - Variables are passed to and used by configuration scripts.
+*/
+
+// Default Account Credentials
+ssh_user                 = "ANSIBLE_SERVICE_ACCOUNT_USER" //SSH Username for Preseed/Kickstart to configure so Ansible can get into provision afterwards
+ssh_private_key_file     = "~/ans_svc_id_rsa" // File path for the private key you'd like to use to provision the box
+build_key                = "ssh-rsa AAAAB3NzaC1yc....x/vq1OaLAz6pYk8=" // Actual public key you'd like installed for the Ansible user to be allowed in.
+
+/*
+    DESCRIPTION:
+    Proxmox WebUI variables used for Linux builds. 
+    - Variables are use by the source blocks.
+*/
+
+//Proxmox Credentials
+proxmox_host             = "10.x.x.x"
+proxmox_node             = "PROXMOXNODE"
+proxmox_user             = "root@pam!APIKEY"
+proxmox_apikey           = "XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX"
+
+// VM Config
+vlan_tag                 = ""
