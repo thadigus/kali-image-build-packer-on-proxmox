@@ -60,6 +60,11 @@ variable "build_passwd_local" {
     type = string
 }
 
+variable "ansible_provisioner_playbook_path" {
+    type = string
+    default = "kali-packer-config.yml"
+}
+
 locals {
   iso_path = "{{var.iso_path}}"
   data_source_content = {
@@ -129,7 +134,7 @@ build {
 
     provisioner "ansible" {
     user          = var.ssh_user
-    playbook_file = "${path.cwd}/kali-packer-config.yml"
+    playbook_file = "${path.cwd}/${var.ansible_provisioner_playbook_path}"
     extra_arguments = [
       "--scp-extra-args", "'-O'", // Added to include work around https://github.com/hashicorp/packer/issues/11783#issuecomment-1137052770
       "--extra-vars", "build_key='${var.build_key}'"
@@ -142,4 +147,3 @@ build {
     ]
   }
 }
-
