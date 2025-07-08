@@ -85,7 +85,7 @@ source "proxmox-iso" "kali-tpl" {
     node = var.proxmox_node
     boot_iso {
       type = "scsi"
-      iso_file = "local:iso/kali-linux-2024.4-installer-amd64.iso"
+      iso_file = "local:iso/kali-linux-installer.iso"
       unmount = true
     }
     vm_name = "kali-base-image"
