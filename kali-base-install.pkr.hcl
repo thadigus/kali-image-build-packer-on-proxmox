@@ -111,7 +111,7 @@ source "proxmox-iso" "kali-tpl" {
     scsi_controller = "virtio-scsi-pci"
     disks {
       type              = "sata"
-      disk_size         = "20G"
+      disk_size         = "40G"
       storage_pool      = "local-lvm"
       format	        = "raw"
     }
