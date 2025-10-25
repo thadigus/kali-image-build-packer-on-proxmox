@@ -2,7 +2,7 @@
 
 This was my attempt at automating Kali builds in Proxmox with Hashicorp Packer. Most of the config is done with the sensitive variables file which will allow you to provision a user and SSH key. Ansible is used for post-install customizations and I'd really recommend that you build your own playbook to make Kali work the way you'd like it.
 
-Start out with installing Packer on your machine and editing the sensitive vars file. Make sure the version of Kali you'd like to use is installed at `local:iso/kali-linux-2024.4-installer-amd64.iso` on the Proxmox target since downloading the ISO each time is not super fun. This is mainly intended for a home lab environment so take everything with a grain of salt and feel free to tinker. If you have any issues please feel free to open one [at the issues tab](https://gitlab.com/thadigus/kali-image-build-packer-on-proxmox/-/issues)!
+Start out with installing Packer on your machine and editing the sensitive vars file. Make sure the version of Kali you'd like to use is installed at `local:iso/kali-linux-2024.4-installer-amd64.iso` on the Proxmox target since downloading the ISO each time is not super fun. Additionally, you can override this ISO location in the sensitive vars file. This is mainly intended for a home lab environment so take everything with a grain of salt and feel free to tinker. If you have any issues please feel free to open one [at the issues tab](https://gitlab.com/thadigus/kali-image-build-packer-on-proxmox/-/issues)!
 
 It's important to know that Kali will not let you install without a password so my script will generate a random, very long, password for the user account and then the preseed file will use that password for the install. The password is then passed into Ansible. This means that you will likely want to change the password when you're done with Ansible so you can access the account. Be sure to set the password you'd like using the Ansible playbook, or you can install an SSH key. 
 
@@ -123,6 +123,8 @@ vlan_tag                 = ""
 
 // Optional Override for path to Ansible playbook (assumes you're starting at top level directory on your Git repo)
 // ansible_provisioner_playbook_path = ""
+// Optional override on a different ISO location
+// kali_boot_iso_path = "local:iso/local:iso/kali-linux-installer.iso"
 ```
 
 ### Script for Packer Build processes

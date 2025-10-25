@@ -65,6 +65,11 @@ variable "ansible_provisioner_playbook_path" {
     default = "kali-packer-config.yml"
 }
 
+variable "kali_boot_iso_path" {
+    type = string
+    default = "local:iso/kali-linux-installer.iso"
+}
+
 locals {
   iso_path = "{{var.iso_path}}"
   data_source_content = {
@@ -85,7 +90,7 @@ source "proxmox-iso" "kali-tpl" {
     node = var.proxmox_node
     boot_iso {
       type = "scsi"
-      iso_file = "local:iso/kali-linux-installer.iso"
+      iso_file = var.kali_boot_iso_path
       unmount = true
     }
     vm_name = "kali-base-image"
